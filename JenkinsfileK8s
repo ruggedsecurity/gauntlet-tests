@@ -6,11 +6,11 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
     traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]
 ]) 
 
-podTemplate(label: 'gauntlt', 
+podTemplate(label: 'gauntlt-pod', 
     containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true)],
     volumes: [hostPathVolume(hostPath: '.', mountPath: '/working')])
 {
-    node('gauntlt') {
+    node('gauntlt-pod') {
         stage('Get Tests') {
             checkout scm
             container('gauntlt') {
