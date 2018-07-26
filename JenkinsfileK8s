@@ -11,9 +11,9 @@ podTemplate(label: 'gauntlt-pod',
     volumes: [hostPathVolume(hostPath: '.', mountPath: '/working')])
 {
     node('gauntlt-pod') {
-        stage('Get Tests') {
-            checkout scm
-            container('gauntlt') {
+        container('gauntlt') {
+            stage('Get Tests') {
+                checkout scm
                 stage('Test project') {
                     sh '--help'
                 }
