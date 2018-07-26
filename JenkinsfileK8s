@@ -16,18 +16,14 @@ pipeline {
     
         kubernetes {
             label 'kubernetes'
-            podTemplate(
-                label: 'gauntlt', 
-                containers: [
-                    containerTemplate(
+            podTemplate( label: 'gauntlt', 
+                containers: [containerTemplate(
                         image: 'gauntlt/gauntlt', 
                         name: 'gauntlt', 
                         command: 'cat', 
                         ttyEnabled: true)
                     ]),
-                volumes: [
-                    hostPathVolume(hostPath: '$(pwd)', mountPath: '/working')
-                    ])
+                volumes: [hostPathVolume(hostPath: '$(pwd)', mountPath: '/working')])
                 }
             }
         }
