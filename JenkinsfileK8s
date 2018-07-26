@@ -21,8 +21,7 @@ pipeline {
                         image: 'gauntlt/gauntlt', 
                         name: 'gauntlt', 
                         command: 'cat', 
-                        ttyEnabled: true)
-                    ]),
+                        ttyEnabled: true)],
                 volumes: [hostPathVolume(hostPath: '$(pwd)', mountPath: '/working')])
         }
     }
