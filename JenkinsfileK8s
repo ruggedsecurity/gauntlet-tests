@@ -13,12 +13,22 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
 
 pipeline {
     agent {
+    
         kubernetes {
             label 'kubernetes'
-            containerTemplate {
-                name 'gauntlt'
-                image 'gauntlt/gauntlt'
-                ttyEnabled true
+            podTemplate(
+                label: 'gauntlt', 
+                containers: [
+                    containerTemplate(
+                        image: 'gauntlt/gauntlt', 
+                        name: 'gauntlt', 
+                        command: 'cat', 
+                        ttyEnabled: true)
+                    ]),
+                volumes: [
+                    hostPathVolume(hostPath: '$(pwd)', mountPath: '/working')
+                    ])
+                }
             }
         }
     }
