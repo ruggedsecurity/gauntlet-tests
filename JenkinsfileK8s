@@ -1,3 +1,41 @@
+library identifier: 'pipeline-library@master', retriever: modernSCM(
+    [$class: 'GitSCMSource', 
+    credentialsId: '', 
+    id: 'pipeline-library', 
+    remote: 'https://github.com/devopspatterns/pipeline-library.git', 
+    traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]
+]) 
+
+//@Library('github.com/devopspatterns/pipeline-library@master')
+//def pipeline = new com.devopspatterns.Pipeline()
+//
+
+
 pipeline {
-  agent any
+    agent {
+        kubernetes {
+            label 'kubernetes'
+            containerTemplate {
+                name 'gauntlt'
+                image 'gauntlt/gauntlt'
+                ttyEnabled true
+            }
+        }
+    }
+    
+    options {
+        // General Jenkins job properties
+        buildDiscarder(logRotator(numToKeepStr:'6'))
+    }
+
+    stages {
+        
+        stage('Build and Package') {
+            steps {
+                container('gauntlt') {
+                    sh "--help"
+                }
+            }
+        }
+    }
 }
