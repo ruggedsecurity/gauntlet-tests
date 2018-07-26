@@ -6,37 +6,16 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
     traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]
 ]) 
 
-//@Library('github.com/devopspatterns/pipeline-library@master')
-//def pipeline = new com.devopspatterns.Pipeline()
-//
-
-
-pipeline {
-    agent {
-    
-        kubernetes {
-            label 'kubernetes'
-            podTemplate( label: 'gauntlt', 
-                containers: [containerTemplate(
-                        image: 'gauntlt/gauntlt', 
-                        name: 'gauntlt', 
-                        command: 'cat', 
-                        ttyEnabled: true)],
-                volumes: [hostPathVolume(hostPath: '$(pwd)', mountPath: '/working')])
-        }
-    }
-    
-    options {
-        // General Jenkins job properties
-        buildDiscarder(logRotator(numToKeepStr:'6'))
-    }
-
-    stages {
-        
-        stage('Build and Package') {
-            steps {
-                container('gauntlt') {
-                    sh "--help"
+podTemplate(label: 'gauntlet', 
+    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true)])
+    volumes: [hostPathVolume(hostPath: '.', mountPath: '/working')]) 
+{
+    node('gauntlt') {
+        stage('Get Tests') {
+            checkout scm
+            container('gauntlt') {
+                stage('Test project') {
+                    sh '--help'
                 }
             }
         }
