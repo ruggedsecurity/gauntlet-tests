@@ -6,7 +6,7 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
     traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]
 ]) 
 
-podTemplate(label: 'gauntlet', 
+podTemplate(label: 'gauntlt', 
     containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true)],
     volumes: [hostPathVolume(hostPath: '.', mountPath: '/working')])
 {
