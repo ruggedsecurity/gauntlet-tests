@@ -24,8 +24,6 @@ pipeline {
                         ttyEnabled: true)
                     ]),
                 volumes: [hostPathVolume(hostPath: '$(pwd)', mountPath: '/working')])
-                }
-            }
         }
     }
     
