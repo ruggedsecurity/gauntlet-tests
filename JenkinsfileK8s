@@ -6,9 +6,8 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
     traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]
 ]) 
 
-/*
 podTemplate(label: 'gauntlt-pod', 
-    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true)],
+    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')],
     volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
 {
     node('gauntlt-pod') {
@@ -22,8 +21,8 @@ podTemplate(label: 'gauntlt-pod',
         }
     }
 }
-*/
 
+/*
 podTemplate(label: 'gauntlt-pod', 
     containers: [containerTemplate(name: 'maven', image: 'maven', ttyEnabled: true, command: 'cat')],
     volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
@@ -39,3 +38,4 @@ podTemplate(label: 'gauntlt-pod',
         }
     }
 }
+*/
