@@ -5,39 +5,6 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
     remote: 'https://github.com/devopspatterns/pipeline-library.git', 
     traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]
 ]) 
-/*
-podTemplate(label: 'gauntlt-pod', 
-    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')])
-{
-    node('gauntlt-pod') {
-        container('gauntlt') {
-            stage('Get Tests') {
-                checkout scm
-                stage('Test project') {
-                    sh 'gauntlt'
-                }
-            }
-        }
-    }
-}
-
-
-podTemplate(label: 'gauntlt-pod', 
-    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')],
-    volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
-{
-    node('gauntlt-pod') {
-        container('gauntlt') {
-            stage('Get Tests') {
-                checkout scm
-                stage('Test project') {
-                    sh 'gauntlt'
-                }
-            }
-        }
-    }
-}
-*/
 
 pipeline {
     agent {
@@ -48,9 +15,12 @@ pipeline {
                 image 'gauntlt/gauntlt'
                 ttyEnabled true
                 command 'cat'
-                //envVars [containerEnvVar(key: 'HOSTNAME', value: 'k8s.designingdevops.com')]
             }
         }
+    }
+
+    triggers {
+        eventTrigger jmespathQuery("artifactId == 'spring-petclinic' && groupId == 'org.springframework.samples' && version.starts_with(@,'1.5')");
     }
     
     parameters { 
@@ -70,11 +40,28 @@ pipeline {
         stage('Build and Package') {
             steps {
                 container('gauntlt') {
-                    ansiColor('xterm') {
-                        sh 'gauntlt'
-                    }
+                   sh 'gauntlt'
                 }
             }
         }
     }
 }
+
+/*
+podTemplate(label: 'gauntlt-pod', 
+    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')],
+    volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
+{
+    node('gauntlt-pod') {
+        container('gauntlt') {
+            stage('Get Tests') {
+                checkout scm
+                stage('Test project') {
+                    sh 'gauntlt'
+                }
+            }
+        }
+    }
+}
+*/
+
