@@ -20,7 +20,7 @@ pipeline {
     }
 
     triggers {
-        eventTrigger jmespathQuery("not_null(appName) == appName");
+        eventTrigger jmespathQuery("type == 'PUB'");
     }
     
     parameters { 
