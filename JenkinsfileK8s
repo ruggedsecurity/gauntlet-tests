@@ -52,9 +52,13 @@ pipeline {
             }
         }
     }
+    
+    parameters { 
+        string(name: 'HOST', defaultValue: 'k8s.designingdevops.com', description: 'Domain to Scan') 
+    }
 
     environment {
-        HOSTNAME='k8s.designingdevops.com'
+        HOSTNAME="${params.HOST}"
     }
     
     options {
