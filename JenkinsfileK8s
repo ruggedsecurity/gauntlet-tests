@@ -15,7 +15,7 @@ podTemplate(label: 'gauntlt-pod',
             stage('Get Tests') {
                 checkout scm
                 stage('Test project') {
-                    sh 'gauntlt --help'
+                    sh 'gauntlt'
                 }
             }
         }
