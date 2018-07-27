@@ -2,14 +2,14 @@
 
 Feature: nmap attacks for scanme.nmap.org and to use this for your tests, change the value in the profile
   Background:
-    Given "nmap" is installed
-    And the following profile:
-      | name           | value        |
-      | hostname       | k8s.designingdevops.com   |
-      | host           | k8s.designingdevops.com   |
-      | tcp_ping_ports | 22,25,80,443 |
+   Given "nmap" is installed
+   
+     And the following environment variables:
+      | name          | environment_variable_name |
+      | hostname      | HOSTNAME                  |
+      | host          | HOSTNAME                  |
 
-  Scenario: Verify server is open on expected set of ports using the nmap-fast attack step
+ Scenario: Verify server is open on expected set of ports using the nmap-fast attack step
     When I launch a "nmap-fast" attack
     Then the output should match /443.tcp\s+open/
 
@@ -21,7 +21,7 @@ Feature: nmap attacks for scanme.nmap.org and to use this for your tests, change
     When I launch an "nmap-fast" attack
     Then the output should not contain:
       """
-      80/tcp
+      22/tcp
       """
 
   Scenario: Detect OS
