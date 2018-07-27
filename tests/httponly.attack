@@ -3,9 +3,11 @@ Feature: Evaluate received cookies against expected.
 
 Background:
   Given "curl" is installed
-  And the following profile:
-    | name     | value      |
-    | hostname | k8s.designingdevops.com |
+  
+   And the following environment variables:
+      | name          | environment_variable_name |
+      | hostname      | HOSTNAME                  |
+      | host          | HOSTNAME                  |
 
 Scenario: Verify server is returning the cookies expected
   When I launch a "curl" attack with:
