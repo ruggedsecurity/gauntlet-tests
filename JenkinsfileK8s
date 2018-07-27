@@ -20,7 +20,7 @@ pipeline {
     }
 
     triggers {
-        eventTrigger jmespathQuery("appName.starts_with(@,'*')");
+        eventTrigger jmespathQuery("not_null('appName') == appName");
     }
     
     parameters { 
