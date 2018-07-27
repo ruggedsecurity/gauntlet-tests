@@ -20,7 +20,7 @@ pipeline {
     }
 
     triggers {
-        eventTrigger jmespathQuery("appName == '*' && version == '*');
+        eventTrigger jmespathQuery("appName == '*' && version == '*'");
     }
     
     parameters { 
