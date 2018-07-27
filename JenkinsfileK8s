@@ -37,9 +37,7 @@ podTemplate(label: 'gauntlt-pod',
         }
     }
 }
-*/
 
-/*
 podTemplate(label: 'gauntlt-pod', 
     containers: [containerTemplate(name: 'maven', image: 'maven', ttyEnabled: true, command: 'cat')],
     volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
