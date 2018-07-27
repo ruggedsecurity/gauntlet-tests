@@ -17,7 +17,7 @@ Feature: nmap attacks for scanme.nmap.org and to use this for your tests, change
     When I launch an "nmap-fast" attack
     Then the output should not contain:
       """
-      80/tcp
+      22/tcp
       """
 
   Scenario: Detect OS
