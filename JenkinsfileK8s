@@ -20,7 +20,7 @@ pipeline {
     }
 
     triggers {
-        eventTrigger jmespathQuery("artifactId == 'spring-petclinic' && groupId == 'org.springframework.samples' && version.starts_with(@,'1.5')");
+        eventTrigger jmespathQuery("appName.starts_with(@,'*')");
     }
     
     parameters { 
