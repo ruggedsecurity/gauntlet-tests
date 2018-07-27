@@ -48,9 +48,13 @@ pipeline {
                 image 'gauntlt/gauntlt'
                 ttyEnabled true
                 command 'cat'
-                envVars [containerEnvVar(key: 'HOSTNAME', value: 'k8s.designingdevops.com')]
+                //envVars [containerEnvVar(key: 'HOSTNAME', value: 'k8s.designingdevops.com')]
             }
         }
+    }
+
+    environment {
+        HOSTNAME='k8s.designingdevops.com'
     }
     
     options {
