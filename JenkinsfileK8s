@@ -29,7 +29,7 @@ podTemplate(label: 'gauntlt-pod',
     volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
 {
     node('gauntlt-pod') {
-        container('gauntlt') {
+        container('maven') {
             stage('Get Tests') {
                 checkout scm
                 stage('Test project') {
