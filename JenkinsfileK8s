@@ -5,7 +5,7 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
     remote: 'https://github.com/devopspatterns/pipeline-library.git', 
     traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]
 ]) 
-
+/*
 podTemplate(label: 'gauntlt-pod', 
     containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')])
 {
@@ -21,7 +21,7 @@ podTemplate(label: 'gauntlt-pod',
     }
 }
 
-/*
+
 podTemplate(label: 'gauntlt-pod', 
     containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')],
     volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
@@ -37,20 +37,33 @@ podTemplate(label: 'gauntlt-pod',
         }
     }
 }
+*/
 
-podTemplate(label: 'gauntlt-pod', 
-    containers: [containerTemplate(name: 'maven', image: 'maven', ttyEnabled: true, command: 'cat')],
-    volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
-{
-    node('gauntlt-pod') {
-        container('maven') {
-            stage('Get Tests') {
-                checkout scm
-                stage('Test project') {
-                    sh ' mvn --help'
+pipeline {
+    agent {
+        kubernetes {
+            label 'gaultlt-pod'
+            containerTemplate {
+                name 'gauntlt'
+                image 'gauntlt/gauntlt'
+                ttyEnabled true
+                command 'cat'
+            }
+        }
+    }
+    
+    options {
+        // General Jenkins job properties
+        buildDiscarder(logRotator(numToKeepStr:'5'))
+    }
+
+    stages {
+        stage('Build and Package') {
+            steps {
+                container('gauntlt') {
+                    sh 'gauntlt'
                 }
             }
         }
     }
 }
-*/
