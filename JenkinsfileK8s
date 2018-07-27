@@ -7,6 +7,22 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
 ]) 
 
 podTemplate(label: 'gauntlt-pod', 
+    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')]
+{
+    node('gauntlt-pod') {
+        container('gauntlt') {
+            stage('Get Tests') {
+                checkout scm
+                stage('Test project') {
+                    sh 'gauntlt'
+                }
+            }
+        }
+    }
+}
+
+/*
+podTemplate(label: 'gauntlt-pod', 
     containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')],
     volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
 {
@@ -21,6 +37,7 @@ podTemplate(label: 'gauntlt-pod',
         }
     }
 }
+*/
 
 /*
 podTemplate(label: 'gauntlt-pod', 
