@@ -66,7 +66,9 @@ pipeline {
         stage('Build and Package') {
             steps {
                 container('gauntlt') {
-                    sh 'gauntlt'
+                    ansiColor('xterm') {
+                        sh 'gauntlt'
+                    }
                 }
             }
         }
