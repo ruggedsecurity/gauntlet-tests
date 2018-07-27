@@ -8,7 +8,7 @@ library identifier: 'pipeline-library@master', retriever: modernSCM(
 
 podTemplate(label: 'gauntlt-pod', 
     containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true)],
-    volumes: [hostPathVolume(hostPath: '.', mountPath: '/working')])
+    volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
 {
     node('gauntlt-pod') {
         container('gauntlt') {
