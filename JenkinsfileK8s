@@ -38,7 +38,7 @@ pipeline {
     }
 
     stages {
-        stage('Build and Package') {
+        stage('Security Scans') {
             steps {
                 container('gauntlt') {
                    sh 'gauntlt'
