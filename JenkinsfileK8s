@@ -20,7 +20,7 @@ pipeline {
     }
 
     triggers {
-        eventTrigger jmespathQuery("type == 'PUB'")
+        eventTrigger jmespathQuery("type == 'WEBPUB'")
         pollSCM('23 11 * * *')
     }
     
