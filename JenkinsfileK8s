@@ -52,13 +52,16 @@ pipeline {
                       echo currentBuild.getBuildCauses()[0].event.toString()
                       echo currentBuild.getBuildCauses()[0].event.source.toString()
                       HOSTNAME = currentBuild.getBuildCauses()[0].event.appName.toString()
-                      HOST = "${HOSTNAME}"
                   }
               }
            }
         }
         
         stage('Security Scans') {
+            environment {
+                HOSTNAME = "${HOSTNAME}"
+            }
+            
             steps {
                 echo """
 ===========================================
