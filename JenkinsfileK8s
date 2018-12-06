@@ -51,8 +51,7 @@ pipeline {
                   if (currentBuild.getBuildCauses()[0]._class == "com.cloudbees.jenkins.plugins.pipeline.events.EventTriggerCause") {
                       echo currentBuild.getBuildCauses()[0].event.toString()
                       echo currentBuild.getBuildCauses()[0].event.source.toString()
-                      echo currentBuild.getBuildCauses()[0].event.type.toString()
-                      echo currentBuild.getBuildCauses()[0].event.appName.toString()
+                      HOSTNAME = currentBuild.getBuildCauses()[0].event.appName.toString()
                   }
               }
            }
