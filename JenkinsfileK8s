@@ -40,10 +40,10 @@ pipeline {
     stages {
         stage('Security Scans') {
             steps {
-                echo """"
-                ===========================================
-                Running Scans against $HOSTNAME
-                ===========================================
+                echo """
+===========================================
+Running Scans against $HOSTNAME
+===========================================
                 """
                 container('gauntlt') {
                    sh 'gauntlt'
