@@ -20,7 +20,7 @@ pipeline {
     }
 
     triggers {
-        eventTrigger jmespathQuery("type == 'WEBPUB'")
+        eventTrigger jmespathQuery("type == 'SECURITY_SCAN'")
         pollSCM('23 11 * * *')
     }
     
@@ -38,6 +38,24 @@ pipeline {
     }
 
     stages {
+        stage('Determine Cause') {
+          steps {
+              echo "All causes of this build:" + currentBuild.getBuildCauses().toString()
+              echo "${currentBuild.getBuildCauses().size()}";
+              script {
+                  echo currentBuild.getBuildCauses()[0]._class;
+              }
+              echo currentBuild.getBuildCauses("hudson.model.Cause").toString()
+
+              script {
+                  if (currentBuild.getBuildCauses()[0]._class == "com.cloudbees.jenkins.plugins.pipeline.events.EventTriggerCause") {
+                      echo currentBuild.getBuildCauses()[0].event.toString()
+                      echo currentBuild.getBuildCauses()[0].event.source.toString()
+                  }
+              }
+           }
+        }
+        
         stage('Security Scans') {
             steps {
                 echo """
@@ -58,21 +76,4 @@ Running Scans against $HOSTNAME
     }
 }
 
-/*
-podTemplate(label: 'gauntlt-pod', 
-    containers: [containerTemplate(name: 'gauntlt', image: 'gauntlt/gauntlt', ttyEnabled: true, command: 'cat')],
-    volumes: [hostPathVolume(hostPath: '/tmp', mountPath: '/working')])
-{
-    node('gauntlt-pod') {
-        container('gauntlt') {
-            stage('Get Tests') {
-                checkout scm
-                stage('Test project') {
-                    sh 'gauntlt'
-                }
-            }
-        }
-    }
-}
-*/
 
