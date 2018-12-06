@@ -20,12 +20,3 @@ Feature: nmap attacks for scanme.nmap.org and to use this for your tests, change
       22/tcp
       """
 
-  Scenario: Detect OS
-    When I launch an "nmap" attack with:
-      """
-      nmap -sV -p443 -PN <hostname>
-      """
-    Then the output should contain:
-      """
-      nginx
-      """
